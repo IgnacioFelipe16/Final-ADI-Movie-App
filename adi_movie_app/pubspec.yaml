@@ -17,6 +17,8 @@ dev_dependencies:
     sdk: flutter
   font_awesome_flutter: ^10.7.0
   http: ^1.2.2
+  webview_flutter: ^4.8.0
+  youtube_player_flutter: ^9.0.2
 
 flutter:
   uses-material-design: true
