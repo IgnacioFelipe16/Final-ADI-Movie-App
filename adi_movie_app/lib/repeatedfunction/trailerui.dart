@@ -8,23 +8,22 @@ class trailerWatch extends StatefulWidget {
   trailerWatch(this.trailerytid);
 
   @override
-  State<trailerWatch> createState() => _trailerwatchState();
+  State<trailerWatch> createState() => _trailerWatchState();
 }
 
-class _trailerwatchState extends State<trailerWatch> {
+class _trailerWatchState extends State<trailerWatch> {
   late YoutubePlayerController _controller;
   
-// Iniciación del reproductor
+  // Iniciación del reproductor
   @override
   void initState() {
     final videoid = YoutubePlayer.convertUrlToId(widget.trailerytid);
     _controller = YoutubePlayerController(
       initialVideoId: videoid.toString(),
-      flags: const YoutubePlayerFlags(    // Probar sin 'const'. Es decir => flags: YoutubePlayerFlags()
+      flags: YoutubePlayerFlags(
         enableCaption: true,
         autoPlay: false,
         mute: false,
-        //  controlVisibleAtStart: true,
         forceHD: true,
       ),
     );
@@ -61,8 +60,7 @@ class _trailerwatchState extends State<trailerWatch> {
             ),
             RemainingDuration(),
             FullScreenButton(),
-          ]
-        //),
+          ],
       ),
     );
   }

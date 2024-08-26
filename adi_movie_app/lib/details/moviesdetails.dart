@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:html';
 import 'package:adi_movie_app/HomePage/HomePage.dart';
 import 'package:adi_movie_app/apikey/apikey.dart';
 import 'package:adi_movie_app/repeatedfunction/trailerui.dart';
@@ -62,21 +64,15 @@ class _MoviesDetailsState extends State<MoviesDetails> {
           "revenue": moviedetailjson['revenue'],
         });
       }
-      for (var i=0; i < 5; i++) {
-      //for (var i=0; i < moviedetailjson['generes'].length; i++) {
-        MoviesGeneres.add(moviedetailjson['generes'][i]['name']);
+      for (var i=0; i < moviedetailjson['genres'].length; i++) {
+        MoviesGeneres.add(moviedetailjson['genres'][i]['name']);
       }
     } else {}
-
-    
-    
-    // User reviews
 
     var UserReviewresponse = await http.get(Uri.parse(UserReviewurl));
     if (UserReviewresponse.statusCode == 200) {
       var UserReviewjson = jsonDecode(UserReviewresponse.body);
-      for (var i=0; i < 5; i++) {
-      //for (var i=0; i < UserReviewjson['results'].length; i++) {
+      for (var i=0; i < UserReviewjson['results'].length; i++) {
         UserReviews.add({
           "name": UserReviewjson['results'][i]['author'],
           "review": UserReviewjson['results'][i]['content'],
@@ -92,16 +88,10 @@ class _MoviesDetailsState extends State<MoviesDetails> {
       }
     } else {}
 
-    
-    
-    // Similar movies
-
-
     var similarmoviesresponse = await http.get(Uri.parse(similarmoviesurl));
     if (similarmoviesresponse.statusCode == 200) {
       var similarmoviesjson = jsonDecode(similarmoviesresponse.body);
-      for (var i=0; i < 5; i++) {
-      //for (var i=0; i < similarmoviesjson['results'].length; i++) {
+      for (var i=0; i < similarmoviesjson['results'].length; i++) {
         similarmovieslist.add({
           "poster_path": similarmoviesjson['results'][i]['poster_path'],
           "name": similarmoviesjson['results'][i]['title'],
@@ -112,16 +102,10 @@ class _MoviesDetailsState extends State<MoviesDetails> {
       }
     } else {}
 
-    
-    
-    // Recommended movies
-
-
     var recommendedmoviesresponse = await http.get(Uri.parse(recommendedmoviesurl));
     if (recommendedmoviesresponse.statusCode == 200) {
       var recommendedmoviesjson = jsonDecode(recommendedmoviesresponse.body);
-      for (var i=0; i < 5; i++) {
-      //for (var i=0; i < recommendedmoviesjson['results'].length; i++) {
+      for (var i=0; i < recommendedmoviesjson['results'].length; i++) {
         recommendedmovieslist.add({
           "poster_path": recommendedmoviesjson['results'][i]['poster_path'],
           "name": recommendedmoviesjson['results'][i]['title'],
@@ -132,16 +116,10 @@ class _MoviesDetailsState extends State<MoviesDetails> {
       }
     } else {}
 
-    
-    
-    // Movie trailers
-
-
     var movietrailersresponse = await http.get(Uri.parse(movietrailersurl));
     if (movietrailersresponse.statusCode == 200) {
       var movietrailersjson = jsonDecode(movietrailersresponse.body);
-      for (var i=0; i < 5; i++) {
-      //for (var i=0; i < movietrailersjson['results'].length; i++) {
+      for (var i=0; i < movietrailersjson['results'].length; i++) {
         if (movietrailersjson['results'][i]['type'] == "Trailer") {
           movietrailerslist.add({
             "key": movietrailersjson['results'][i]['key'],
@@ -162,7 +140,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return CustomScrollView(
-              physics: const BouncingScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               slivers: [
                 SliverAppBar(
                   automaticallyImplyLeading: false,
@@ -217,8 +195,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                             child: ListView.builder(
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
-                              itemCount: 5,
-                              //itemCount: MoviesGeneres.length,
+                              itemCount: MoviesGeneres.length,
                               itemBuilder: (context, index) {
                                 return Container(
                                   margin: EdgeInsets.only(right: 10),
@@ -262,7 +239,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 20, top: 10),
+                      padding: EdgeInsets.only(left: 20, top: 10),                
                       child: UserReview(UserReviews),
                     ),
                     Padding(
@@ -278,12 +255,10 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                       child: Text('Ingresos : ' + MoviesDetails[0]['revenue'].toString()),
                     ),
                     sliderlist(
-                      similarmovieslist, "Películas similares", "movie", 5
-                      //similarmovieslist, "Películas similares", "movie", similarmovieslist.length
+                      similarmovieslist, "Similares", "movie", similarmovieslist.length
                     ),
                     sliderlist(
-                      recommendedmovieslist, "Recomendaciones", "movie", 5
-                      //recommendedmovieslist, "Recomendaciones", "movie", recommendedmovieslist.length
+                      recommendedmovieslist, "Recomendaciones", "movie", recommendedmovieslist.length
                     )
                   ])
                 )
