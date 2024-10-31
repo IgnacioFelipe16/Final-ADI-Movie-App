@@ -64,7 +64,9 @@ class _MoviesDetailsState extends State<MoviesDetails> {
           "revenue": moviedetailjson['revenue'],
         });
       }
+      
       for (var i=0; i < moviedetailjson['genres'].length; i++) {
+      //for (var i=0; i < 5; i++) {
         MoviesGeneres.add(moviedetailjson['genres'][i]['name']);
       }
     } else {}
@@ -73,11 +75,12 @@ class _MoviesDetailsState extends State<MoviesDetails> {
     if (UserReviewresponse.statusCode == 200) {
       var UserReviewjson = jsonDecode(UserReviewresponse.body);
       for (var i=0; i < UserReviewjson['results'].length; i++) {
+      //for (var i=0; i < 5; i++) {
         UserReviews.add({
           "name": UserReviewjson['results'][i]['author'],
           "review": UserReviewjson['results'][i]['content'],
           "rating": UserReviewjson['results'][i]['author_details']['rating'] == null
-            ? "No clasificado"
+            ? "No calificada"
             : UserReviewjson['results'][i]['author_details']['rating'].toString(),
           "avatarphoto": UserReviewjson['results'][i]['author_details']['avatar_path'] == null
             ? "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
@@ -92,6 +95,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
     if (similarmoviesresponse.statusCode == 200) {
       var similarmoviesjson = jsonDecode(similarmoviesresponse.body);
       for (var i=0; i < similarmoviesjson['results'].length; i++) {
+      //for (var i=0; i < 5; i++) {
         similarmovieslist.add({
           "poster_path": similarmoviesjson['results'][i]['poster_path'],
           "name": similarmoviesjson['results'][i]['title'],
@@ -106,6 +110,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
     if (recommendedmoviesresponse.statusCode == 200) {
       var recommendedmoviesjson = jsonDecode(recommendedmoviesresponse.body);
       for (var i=0; i < recommendedmoviesjson['results'].length; i++) {
+      //for (var i=0; i < 5; i++) {
         recommendedmovieslist.add({
           "poster_path": recommendedmoviesjson['results'][i]['poster_path'],
           "name": recommendedmoviesjson['results'][i]['title'],
@@ -119,7 +124,8 @@ class _MoviesDetailsState extends State<MoviesDetails> {
     var movietrailersresponse = await http.get(Uri.parse(movietrailersurl));
     if (movietrailersresponse.statusCode == 200) {
       var movietrailersjson = jsonDecode(movietrailersresponse.body);
-      for (var i=0; i < movietrailersjson['results'].length; i++) {
+      //for (var i=0; i < movietrailersjson['results'].length; i++) {
+      for (var i=0; i < 5; i++) {
         if (movietrailersjson['results'][i]['type'] == "Trailer") {
           movietrailerslist.add({
             "key": movietrailersjson['results'][i]['key'],
@@ -177,9 +183,9 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                     collapseMode: CollapseMode.parallax,
                     background: FittedBox(
                       fit: BoxFit.fill,
-                      child: trailerWatch(
+                      /*child: trailerWatch(
                         movietrailerslist[0]['key'],
-                      ),
+                      ),*/
                     ),
                   ),
                 ),
@@ -258,7 +264,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                       similarmovieslist, "Similares", "movie", similarmovieslist.length
                     ),
                     sliderlist(
-                      recommendedmovieslist, "Recomendaciones", "movie", recommendedmovieslist.length
+                      recommendedmovieslist, "Recomendaciones", "movie", recommendedmovieslist.length                    
                     )
                   ])
                 )
