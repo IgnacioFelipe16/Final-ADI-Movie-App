@@ -1,8 +1,16 @@
+import 'dart:async';
+import 'dart:html';
+import 'package:adi_movie_app/HomePage/HomePage.dart';
 import 'package:adi_movie_app/apikey/apikey.dart';
+import 'package:adi_movie_app/repeatedfunction/trailerui.dart';
+import 'package:adi_movie_app/repeatedfunction/userreview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:adi_movie_app/repeatedfunction/slider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MoviesDetails extends StatefulWidget {
   var id;
@@ -18,7 +26,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
   List<Map<String, dynamic>> similarmovieslist = [];
   List<Map<String, dynamic>> recommendedmovieslist = [];
   List<Map<String, dynamic>> movietrailerslist = [];
-  List<Map<String, dynamic>> MoviesGenres = [];
+  List MoviesGeneres = [];
 
   Future<void> MoviesDetail() async {
     var moviedetailurl = 'https://api.themoviedb.org/3/movie/' + 
@@ -56,8 +64,10 @@ class _MoviesDetailsState extends State<MoviesDetails> {
           "revenue": moviedetailjson['revenue'],
         });
       }
+      
       for (var i=0; i < moviedetailjson['genres'].length; i++) {
-        MoviesGenres.add(moviedetailjson['genres'][i]['name']);
+      //for (var i=0; i < 5; i++) {
+        MoviesGeneres.add(moviedetailjson['genres'][i]['name']);
       }
     } else {}
 
@@ -65,11 +75,12 @@ class _MoviesDetailsState extends State<MoviesDetails> {
     if (UserReviewresponse.statusCode == 200) {
       var UserReviewjson = jsonDecode(UserReviewresponse.body);
       for (var i=0; i < UserReviewjson['results'].length; i++) {
+      //for (var i=0; i < 5; i++) {
         UserReviews.add({
           "name": UserReviewjson['results'][i]['author'],
           "review": UserReviewjson['results'][i]['content'],
           "rating": UserReviewjson['results'][i]['author_details']['rating'] == null
-            ? "No clasificado"
+            ? "No calificada"
             : UserReviewjson['results'][i]['author_details']['rating'].toString(),
           "avatarphoto": UserReviewjson['results'][i]['author_details']['avatar_path'] == null
             ? "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png"
@@ -84,6 +95,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
     if (similarmoviesresponse.statusCode == 200) {
       var similarmoviesjson = jsonDecode(similarmoviesresponse.body);
       for (var i=0; i < similarmoviesjson['results'].length; i++) {
+      //for (var i=0; i < 5; i++) {
         similarmovieslist.add({
           "poster_path": similarmoviesjson['results'][i]['poster_path'],
           "name": similarmoviesjson['results'][i]['title'],
@@ -98,6 +110,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
     if (recommendedmoviesresponse.statusCode == 200) {
       var recommendedmoviesjson = jsonDecode(recommendedmoviesresponse.body);
       for (var i=0; i < recommendedmoviesjson['results'].length; i++) {
+      //for (var i=0; i < 5; i++) {
         recommendedmovieslist.add({
           "poster_path": recommendedmoviesjson['results'][i]['poster_path'],
           "name": recommendedmoviesjson['results'][i]['title'],
@@ -111,7 +124,8 @@ class _MoviesDetailsState extends State<MoviesDetails> {
     var movietrailersresponse = await http.get(Uri.parse(movietrailersurl));
     if (movietrailersresponse.statusCode == 200) {
       var movietrailersjson = jsonDecode(movietrailersresponse.body);
-      for (var i=0; i < movietrailersjson['results'].length; i++) {
+      //for (var i=0; i < movietrailersjson['results'].length; i++) {
+      for (var i=0; i < 5; i++) {
         if (movietrailersjson['results'][i]['type'] == "Trailer") {
           movietrailerslist.add({
             "key": movietrailersjson['results'][i]['key'],
@@ -125,6 +139,146 @@ class _MoviesDetailsState extends State<MoviesDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: const Color.fromRGBO(14, 14, 14, 1),
+      body: FutureBuilder(
+        future: MoviesDetail(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return CustomScrollView(
+              physics: BouncingScrollPhysics(),
+              slivers: [
+                SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  leading: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(FontAwesomeIcons.circleArrowLeft),
+                    iconSize: 28,
+                    color: Colors.white
+                  ),
+                  actions: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HomePage()
+                          ),
+                          (route) => false
+                        );
+                      },
+                      icon: Icon(FontAwesomeIcons.houseUser),
+                      iconSize: 25,
+                      color: Colors.white
+                    ),
+                  ],
+                  backgroundColor: Color.fromRGBO(18, 18, 18, 0.5),
+                  centerTitle: false,
+                  pinned: true,
+                  expandedHeight:
+                    MediaQuery.of(context).size.height * 0.4,
+                  flexibleSpace: FlexibleSpaceBar(
+                    collapseMode: CollapseMode.parallax,
+                    background: FittedBox(
+                      fit: BoxFit.fill,
+                      /*child: trailerWatch(
+                        movietrailerslist[0]['key'],
+                      ),*/
+                    ),
+                  ),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate([
+                    Column(
+                      children: [
+                        Row(children: [
+                          Container(
+                            padding: EdgeInsets.only(left: 10, top: 10),
+                            height: 50,
+                            width: MediaQuery.of(context).size.width,
+                            child: ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemCount: MoviesGeneres.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: EdgeInsets.only(right: 10),
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: Color.fromRGBO(25, 25, 25, 1),
+                                    borderRadius: BorderRadius.circular(10)
+                                  ),
+                                  child: Text(MoviesGeneres[index])
+                                );
+                              },
+                            )
+                          )
+                        ],),
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              margin: EdgeInsets.only(left: 10, top: 10),
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(25, 25, 25, 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child:Text(
+                                MoviesDetails[0]['runtime'].toString() + ' min'
+                              )
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, top: 10),
+                      child: Text('Sinópsis :'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, top: 10),
+                      child: Text(
+                        MoviesDetails[0]['overview'].toString()
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, top: 10),                
+                      child: UserReview(UserReviews),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, top: 20),
+                      child: Text('Fecha de estreno : ' + MoviesDetails[0]['release_date'].toString()),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, top: 20),
+                      child: Text('Presupuesto : ' + MoviesDetails[0]['budget'].toString()),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, top: 20),
+                      child: Text('Ingresos : ' + MoviesDetails[0]['revenue'].toString()),
+                    ),
+                    sliderlist(
+                      similarmovieslist, "Similares", "movie", similarmovieslist.length
+                    ),
+                    sliderlist(
+                      recommendedmovieslist, "Recomendaciones", "movie", recommendedmovieslist.length                    
+                    )
+                  ])
+                )
+              ],
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.amber,
+              ),
+            );
+          }
+        },
+      )
+    );
   }
 }

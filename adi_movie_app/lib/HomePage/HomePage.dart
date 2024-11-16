@@ -1,6 +1,7 @@
 import 'package:adi_movie_app/HomePage/SectionPage/movies.dart';
 import 'package:adi_movie_app/HomePage/SectionPage/tvseries.dart';
 import 'package:adi_movie_app/HomePage/SectionPage/upcomming.dart';
+import 'package:adi_movie_app/repeatedfunction/searchbar.dart';
 import 'package:flutter/material.dart';
 import 'package:adi_movie_app/apilinks/allapi.dart';
 import 'package:flutter/widgets.dart';
@@ -169,9 +170,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
           ),
           SliverList(
               delegate: SliverChildListDelegate([
-            const Center(
-              child: Text("Texto de ejemplo"),
-            ),
+            searchbar(),
             SizedBox(
                 height: 45,
                 width: MediaQuery.of(context).size.width,
