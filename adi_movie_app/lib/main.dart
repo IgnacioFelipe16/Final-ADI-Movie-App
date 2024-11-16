@@ -1,7 +1,12 @@
+import 'package:adi_movie_app/firebase_options.dart';
+import 'package:adi_movie_app/services/auth/auth_gate.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'HomePage/HomePage.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MainApp());
 }
 
@@ -16,7 +21,7 @@ class MainApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: HomePage(),
+      home: const AuthGate(),   //Cuando se inicia la aplicaión, lo primero que aparece está en este archivo.
     );
   }
 }
