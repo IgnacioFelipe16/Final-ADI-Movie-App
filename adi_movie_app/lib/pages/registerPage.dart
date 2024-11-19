@@ -1,5 +1,7 @@
 import 'package:adi_movie_app/repeatedfunction/buttonLogin.dart';
+import 'package:adi_movie_app/repeatedfunction/loadingCircle.dart';
 import 'package:adi_movie_app/repeatedfunction/textField.dart';
+import 'package:adi_movie_app/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -11,10 +13,39 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _auth = AuthService();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController pwController = TextEditingController();
   final TextEditingController confirmPwController = TextEditingController();
+
+  //Registrarse
+  void register() async {
+    if(pwController.text == confirmPwController.text) {
+      showLoadingCircle(context);
+      try {
+        await _auth.registerEmailPassword(emailController.text, pwController.text);
+        if (mounted) hideLoadingCircle(context);
+      } catch (e) {
+        if (mounted) hideLoadingCircle(context);
+        if (mounted) {
+          showDialog(
+            context: context, 
+            builder: (context) => AlertDialog(
+              title: Text(e.toString()),
+            ),
+          );
+        }
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+          title: Text("Las contraseñas no coinciden"),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 30),
                 MyButton(
                   text: "Registrarse", 
-                  onTap: () {},
+                  onTap: register,
                 ),
                 
                 const SizedBox(height: 50),
