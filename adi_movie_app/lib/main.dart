@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'MovieMind',   // En el navegador, el nombre 
       home: const AuthGate(),   //Cuando se inicia la aplicaión, lo primero que aparece está en este archivo.
     );
   }
