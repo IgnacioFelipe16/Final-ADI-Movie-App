@@ -1,4 +1,5 @@
 import 'package:adi_movie_app/repeatedfunction/buttonLogin.dart';
+import 'package:adi_movie_app/repeatedfunction/loadingCircle.dart';
 import 'package:adi_movie_app/repeatedfunction/textField.dart';
 import 'package:adi_movie_app/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +20,27 @@ class _LoginPageState extends State<LoginPage> {
 
   //Llamada al método de iniciar sesión de auth_service
   void login() async {
+
+    //Mostrar círulo de carga
+    showLoadingCircle(context);
+
     try {
+      //Intentando iniciar sesión
       await _auth.loginEmailPassword(emailController.text, pwController.text);
+
+      //Ocultar círculo de carga cuando termine el login
+      if (mounted) hideLoadingCircle(context);
     }
     catch (e) {
-      print(e.toString());
+      if (mounted) hideLoadingCircle(context);
+      if (mounted) {
+        showDialog(
+          context: context, 
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          ),
+        );
+      }
     }
   }
 

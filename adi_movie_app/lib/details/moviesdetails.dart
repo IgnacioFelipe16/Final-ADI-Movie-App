@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:html';
 import 'package:adi_movie_app/HomePage/HomePage.dart';
 import 'package:adi_movie_app/apikey/apikey.dart';
-import 'package:adi_movie_app/repeatedfunction/trailerui.dart';
 import 'package:adi_movie_app/repeatedfunction/userreview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -267,7 +266,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                       recommendedmovieslist, "Recomendaciones", "movie", recommendedmovieslist.length                    
                     )
                   ])
-                )
+                ),
               ],
             );
           } else {
