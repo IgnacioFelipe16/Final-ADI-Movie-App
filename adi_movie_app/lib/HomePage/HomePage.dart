@@ -2,13 +2,13 @@ import 'package:adi_movie_app/HomePage/SectionPage/movies.dart';
 import 'package:adi_movie_app/HomePage/SectionPage/tvseries.dart';
 import 'package:adi_movie_app/HomePage/SectionPage/upcomming.dart';
 import 'package:adi_movie_app/repeatedfunction/searchbar.dart';
+import 'package:adi_movie_app/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:adi_movie_app/apilinks/allapi.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin{ 
   List<Map<String, dynamic>> trendinglist = [];
   Future<void> trendinglisthome() async {
     if (uval == 1) {
@@ -54,10 +54,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
   }
 
   int uval = 1;
+
+  //logout
+  final _auth = AuthService();
+  void logout(){
+    _auth.logout();
+  }
+  //-----------------------
+
+
   @override
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 3, vsync: this);
-    
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -198,7 +207,27 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                   Upcomming(),
                 ],
               ),
-            )
+            ),
+
+            //cerrar la sesión
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+              child: Center(
+                child: GestureDetector(
+                  onTap: logout,
+                child: Text(
+                  "Cerrar sesión",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          //-------------------------------------------------------------
+
           ]))
         ],
       ),
