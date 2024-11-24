@@ -57,9 +57,11 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(height: 50),
                 Icon(
-                  Icons.lock_open_rounded,
+                  //Icons.lock_open_rounded,
+                  Icons.movie_outlined,
                   size: 72,
-                  color: Colors.white24),
+                  //color: Colors.white24),
+                  color: Colors.amber),
           
                 const SizedBox(height: 50),
                 Text(

@@ -72,7 +72,7 @@ Widget sliderlist(
                                           const SizedBox(width: 2),
                                           Text(firstlistname[index]
                                                   ['vote_average']
-                                              .toString())
+                                              .toStringAsFixed(1))
                                         ]))))
                           ])));
             })),

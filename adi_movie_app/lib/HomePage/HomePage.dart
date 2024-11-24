@@ -1,6 +1,6 @@
 import 'package:adi_movie_app/HomePage/SectionPage/movies.dart';
 import 'package:adi_movie_app/HomePage/SectionPage/tvseries.dart';
-import 'package:adi_movie_app/HomePage/SectionPage/upcomming.dart';
+import 'package:adi_movie_app/HomePage/SectionPage/upcoming.dart';
 import 'package:adi_movie_app/repeatedfunction/searchbar.dart';
 import 'package:adi_movie_app/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -204,12 +204,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                 children: [
                   TvSeries(),
                   Movies(),
-                  Upcomming(),
+                  Upcoming(),
                 ],
               ),
             ),
 
-            //cerrar la sesión
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
               child: Center(
@@ -226,7 +225,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
               ),
             ),
           ),
-          //-------------------------------------------------------------
 
           ]))
         ],

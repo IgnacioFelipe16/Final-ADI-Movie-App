@@ -28,11 +28,11 @@ class _MoviesDetailsState extends State<MoviesDetails> {
   Future<void> MoviesDetail() async {
     var moviedetailurl = 'https://api.themoviedb.org/3/movie/' +
         widget.id.toString() +
-        '?api_key=$apikey';
+        '?language=es&api_key=$apikey';
 
     var UserReviewurl = 'https://api.themoviedb.org/3/movie/' +
         widget.id.toString() +
-        '/reviews?api_key=$apikey';
+        '/reviews?language=es-AR&api_key=$apikey';
 
     var similarmoviesurl = 'https://api.themoviedb.org/3/movie/' +
         widget.id.toString() +
@@ -45,6 +45,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
     var moviedetailresponse = await http.get(Uri.parse(moviedetailurl));
     if (moviedetailresponse.statusCode == 200) {
       var moviedetailjson = jsonDecode(moviedetailresponse.body);
+      print(moviedetailjson['id']);
       for (var i = 0; i < 1; i++) {
         MoviesDetails.add({
           "backdrop_path": moviedetailjson['backdrop_path'],
@@ -142,6 +143,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                     actions: [
                       IconButton(
                         onPressed: () {
+                          //Mata todas las rutas previas y vuelve a la home
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
@@ -189,6 +191,19 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                       delegate: SliverChildListDelegate([
                     Column(
                       children: [
+
+                        Padding(
+                          padding: EdgeInsets.only(left: 20, top: 20),
+                          child: Text(
+                            MoviesDetails[0]['title'].toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+
                         Row(
                           children: [
                             Container(
@@ -232,7 +247,13 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 20, top: 10),
-                      child: Text('Sinópsis :'),
+                      child: Text(
+                        'Sinópsis:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 20, top: 10),
@@ -244,18 +265,31 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 20, top: 20),
-                      child: Text('Fecha de estreno : ' +
-                          MoviesDetails[0]['release_date'].toString()),
+                      child: Text(
+                        'Fecha de estreno: ' +
+                          MoviesDetails[0]['release_date'].toString()
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 20, top: 20),
-                      child: Text('Presupuesto : ' +
-                          MoviesDetails[0]['budget'].toString()),
+                      child: Text(
+                        'Presupuesto: ' +
+                          MoviesDetails[0]['budget'].toString()
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 20, top: 20),
-                      child: Text('Ingresos : ' +
-                          MoviesDetails[0]['revenue'].toString()),
+                      child: Text(
+                        'Ganancias: ' +
+                          MoviesDetails[0]['revenue'].toString()
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, top: 20),
+                      child: Text(
+                        'Puntaje: ' +
+                          MoviesDetails[0]['vote_average'].toStringAsFixed(1)
+                      ),
                     ),
                     sliderlist(similarmovieslist, "Similares", "movie",
                         similarmovieslist.length),

@@ -37,7 +37,7 @@ class _searchbarState extends State<searchbar> {
               'vote_average': item['vote_average'],
               'media_type': item['media_type'],
               'popularity': item['popularity'],
-              'overview': item['overview'],
+              'overview': item['overview']
             });
 
             if(searchResult.length > 20) {
@@ -175,7 +175,8 @@ class _searchbarState extends State<searchbar> {
                                           Container(
                                             alignment: Alignment.topCenter,
                                             child: Text(
-                                              '${searchResult[index]['media_type']}'),
+                                              '${searchResult[index]['media_type']}',
+                                            ),
                                           ),
                                           Container(
                                             child: Row(
@@ -195,7 +196,7 @@ class _searchbarState extends State<searchbar> {
                                                         color: Colors.amber,
                                                         size: 20),
                                                         SizedBox(width: 5),
-                                                        Text('${searchResult[index]['vote_average']}'),
+                                                        Text('${searchResult[index]['vote_average'].toStringAsFixed(1)}'),
                                                       ],
                                                     ),
                                                   ),
@@ -215,7 +216,7 @@ class _searchbarState extends State<searchbar> {
                                                       Icon(
                                                         Icons.people_outline_sharp,
                                                         color: Colors.amber,
-                                                        size: 10,
+                                                        size: 20,
                                                       ),
                                                       SizedBox(width: 5),
                                                       Expanded(

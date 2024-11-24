@@ -27,7 +27,7 @@ class _UserReviewState extends State<UserReview> {
                     'Reseñas',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -41,7 +41,7 @@ class _UserReviewState extends State<UserReview> {
                     children: [
                       showall == false
                         ? Text(
-                          'Ver todas ' + '${ReviewDetails.length} ',
+                          'Ver todas ' + '(${ReviewDetails.length}) ',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 14),
