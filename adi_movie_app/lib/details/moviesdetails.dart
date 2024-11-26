@@ -143,7 +143,6 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                     actions: [
                       IconButton(
                         onPressed: () {
-                          //Mata todas las rutas previas y vuelve a la home
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(

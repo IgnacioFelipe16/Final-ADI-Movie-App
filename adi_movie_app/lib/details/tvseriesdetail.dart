@@ -45,7 +45,6 @@ class _TvSeriesDetailsState extends State<TvSeriesDetails> {
 
     var seriesdetailresponse = await http.get(Uri.parse(seriedetailurl));
     if (seriesdetailresponse.statusCode == 200) {
-      //var seriesdetailjson = jsonDecode(seriesdetailresponse.body);
       seriesdetailjson = jsonDecode(seriesdetailresponse.body);
       for (var i = 0; i < 1; i++) {
           TvSeriesDetails.add({
@@ -142,7 +141,6 @@ class _TvSeriesDetailsState extends State<TvSeriesDetails> {
                     actions: [
                       IconButton(
                         onPressed: () {
-                          //Mata todas las rutas previas y vuelve a la home
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(

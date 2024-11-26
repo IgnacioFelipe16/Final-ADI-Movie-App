@@ -55,13 +55,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
 
   int uval = 1;
 
-  //logout
   final _auth = AuthService();
   void logout(){
     _auth.logout();
   }
-  //-----------------------
-
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +69,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
         slivers: [
           SliverAppBar(
             centerTitle: true,
-            // automaticallyImplyLeading: false,
             toolbarHeight: 60,
             pinned: true,
             expandedHeight: MediaQuery.of(context).size.height * 0.5,
@@ -97,7 +93,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
                                 decoration: BoxDecoration(
-                                  // color: Colors.amber,
                                   image: DecorationImage(
                                    colorFilter: ColorFilter.mode(
                                     Colors.black.withOpacity(0.3),
@@ -135,7 +130,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
                         setState(() {
                           trendinglist.clear();
                           uval = int.parse(value.toString());
-                          //trendinglist(uval);
                         });
                       },
                       autofocus: true,
@@ -225,7 +219,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin{
               ),
             ),
           ),
-
           ]))
         ],
       ),
