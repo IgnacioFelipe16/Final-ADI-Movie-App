@@ -260,7 +260,7 @@ class _TvSeriesDetailsState extends State<TvSeriesDetails> {
                     Padding(
                       padding: EdgeInsets.only(left: 20, top: 20),
                       child: Text(
-                        'Puntaje: ' +
+                        'Puntaje: ' + 
                           TvSeriesDetails[0]['vote_average'].toStringAsFixed(1)
                       ),
                     ),

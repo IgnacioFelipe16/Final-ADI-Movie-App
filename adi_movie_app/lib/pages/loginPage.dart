@@ -37,11 +37,11 @@ class _LoginPageState extends State<LoginPage> {
         showDialog(
           context: context, 
           builder: (context) => AlertDialog(
-            title: Text(e.toString()),
+            title: Text("Credenciales incorrectas"),
           ),
         );
       }
-    }
+    } 
   }
 
 
@@ -57,15 +57,13 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(height: 50),
                 Icon(
-                  //Icons.lock_open_rounded,
                   Icons.movie_outlined,
                   size: 72,
-                  //color: Colors.white24),
-                  color: Colors.amber),
-          
+                  color: Colors.amberAccent),
+                
                 const SizedBox(height: 50),
                 Text(
-                  "Inicia sesión",
+                  "Inicia sesión en MovieMind",
                   style: TextStyle(
                     color: Colors.white24,
                     fontSize: 16,

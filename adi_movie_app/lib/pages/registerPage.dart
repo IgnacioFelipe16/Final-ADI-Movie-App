@@ -59,13 +59,13 @@ class _RegisterPageState extends State<RegisterPage> {
               children: [
                 const SizedBox(height: 50),
                 Icon(
-                  Icons.lock_open_rounded,
+                  Icons.movie_outlined,
                   size: 72,
-                  color: Colors.white24),
+                  color: Colors.amberAccent),
           
                 const SizedBox(height: 20),
                 Text(
-                  "Creá tu cuenta",
+                  "Creá tu cuenta en MovieMind",
                   style: TextStyle(
                     color: Colors.white24,
                     fontSize: 16,

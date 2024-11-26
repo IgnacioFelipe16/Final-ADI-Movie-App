@@ -273,15 +273,15 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                     Padding(
                       padding: EdgeInsets.only(left: 20, top: 20),
                       child: Text(
-                        'Presupuesto: ' +
-                          MoviesDetails[0]['budget'].toString()
+                        'Presupuesto: \$' +
+                          MoviesDetails[0]['budget'].toString() +' USD'
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 20, top: 20),
                       child: Text(
-                        'Ganancias: ' +
-                          MoviesDetails[0]['revenue'].toString()
+                        'Ganancias: \$' +
+                          MoviesDetails[0]['revenue'].toString() + ' USD'
                       ),
                     ),
                     Padding(
